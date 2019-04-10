@@ -49,7 +49,7 @@ export default {
   name: 'colorWheel',
   data: function () {
     return {
-      visible: ['colorWheel'],
+      visible: [],
       showTool: false,
       value: '#000000',
       hue: 0,

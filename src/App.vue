@@ -64,8 +64,8 @@ export default {
         { type: 'ascii' },
         { type: 'code-convert' },
         { type: 'time-convert' },
-        { type: 'color-wheel' },
-        { type: 'test' }
+        { type: 'color-wheel' }
+        //{ type: 'test' }
       ]
     }
   }
@@ -76,6 +76,7 @@ export default {
 ul {
   display: inline-block;
   margin: 0;
+  padding: 0;
   margin-block-start: 0;
   margin-block-end: 0;
   padding-inline-start: 0;

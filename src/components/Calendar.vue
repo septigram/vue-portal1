@@ -41,6 +41,7 @@ export default {
   name: 'calendar',
   data: function () {
     return {
+      visible: ['calendar'],
       calendars: [],
       diffMonth: 0,
       dayOfWeekHead: 0, // 0:日曜始まり, 1:月曜始まり
