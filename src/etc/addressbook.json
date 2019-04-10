@@ -1,0 +1,74 @@
+[
+	{
+		"category": "開発",
+		"color": "#3E8EDD",
+		"links": [
+			{ "label": "SonarQube(local)", "url": "http://localhost:9000", "title": "admin / admin", "description": "SonarQube", "target": "_blank" },
+			{ "label": "portal", "url": "http://localhost:8080", "title": "", "description": "", "target": "_blank" },
+			{ "label": "GitLab(ngtx0003)", "url": "http://172.16.13.12/", "title": "", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"category": "社内サービス",
+		"color": "#CD2B2B",
+		"links": [
+			{ "label": "FileZen", "url": "https://192.168.80.30/cgi-bin/index.cgi", "title": "", "description": "", "target": "_blank" },
+			{ "label": "イースティルSharePoint", "url": "https://estijl.sharepoint.com/SitePages/ホーム.aspx", "title": "", "description": "", "target": "_blank" },
+			{ "label": "イースティルVDI", "url": "http://ssddc01.top.estijl.com/", "title": "", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"category": "クレCI",
+		"color": "#3A8713",
+		"links": [
+			{ "label": "redmine", "url": "https://tmn.it-forest.net/redmine/login", "title": "Kazuki.KUROSE@estijl.com / eStijlyyMM", "description": "", "target": "_blank" },
+			{ "label": "web1", "url": "http://192.168.80.50:9002", "title": "test / test", "description": "", "target": "_blank" },
+			{ "label": "web2", "url": "http://192.168.80.50:9024", "title": "test / test", "description": "", "target": "_blank" },
+			{ "label": "portainer", "url": "http://192.168.80.50:9000", "title": "", "description": "", "target": "_blank" },
+			{ "label": "Concourse", "url": "http://192.168.80.50:9004", "title": "concourse / concource", "description": "", "target": "_blank" },
+			{ "label": "Sonarqube", "url": "http://192.168.80.50:9005/", "title": "admin / admin", "description": "", "target": "_blank" },
+			{ "label": "greenbone", "url": "https://192.168.80.50:9001/", "title": "admin / admin", "description": "", "target": "_blank" },
+			{ "label": "GitBacket", "url": "http://192.168.80.50:9003/", "title": "root / root or tmn / tmn", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"category": "Web技術",
+		"color": "#14C7CD",
+		"links": [
+			{ "label": "MDN-JavaScript", "url": "https://developer.mozilla.org/ja/docs/Web/JavaScript", "title": "", "description": "", "target": "_blank" },
+			{ "label": "MDN-HTML", "url": "https://developer.mozilla.org/ja/docs/Web/HTML", "title": "", "description": "", "target": "_blank" },
+			{ "label": "MDN-CSS", "url": "https://developer.mozilla.org/ja/docs/Web/CSS", "title": "", "description": "", "target": "_blank" },
+			{ "label": "vue.js", "url": "https://jp.vuejs.org", "title": "", "description": "", "target": "_blank" },
+			{ "label": "vuex.js", "url": "https://vuex.vuejs.org", "title": "", "description": "", "target": "_blank" },
+			{ "label": "element-ui", "url": "https://element.eleme.io/#/en-US/component/layout", "title": "", "description": "", "target": "_blank" },
+			{ "label": "fontawesome", "url": "https://fontawesome.com/icons?d=gallery", "title": "", "description": "", "target": "_blank" },
+			{ "label": "moment.js", "url": "https://momentjs.com", "title": "", "description": "", "target": "_blank" },
+			{ "label": "配色ツール", "url": "http://ozpa-h4.com/2012/11/27/color-chart-tool", "title": "", "description": "", "target": "_blank" },
+			{ "label": "Adobe Color CC", "url": "http://color.adobe.com/ja/create/color-wheel/", "title": "", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"category": "セキュリティ技術",
+		"color": "#8216C1",
+		"links": [
+			{ "label": "Japan Vulnerability Notes", "url": "https://jvn.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "IT dashboard", "url": "http://www.itdashboard.go.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "[×]セキュリティーホールmemo", "url": "http://www.st.ryukoku.ac.jp/~kjm/security/memo/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "[×]スラッシュドット・ジャパン", "url": "http://srad.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "Vuls", "url": "https://vuls.io/docs/ja/abstract.html", "title": "", "description": "", "target": "_blank" },
+			{ "label": "[×]情報処理推進機構：情報セキュリティ", "url": "http://www.ipa.go.jp/security/jisec/cc/index.html", "title": "", "description": "", "target": "_blank" },
+			{ "label": "cyber attack map", "url": "https://www.csoonline.com/article/3217944/security/8-top-cyver-attack-maps-and-how-to-use-them.html", "title": "", "description": "", "target": "_blank" },
+			{ "label": "[×]OWASP Zed", "url": "https://www.owasp.org/index.php/PWASP_Zed_Attack_Proxy_Project", "title": "", "description": "", "target": "_blank" },
+			{ "label": "[×]Googleマップ", "url": "http://maps.google.co.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "LAC", "url": "https://www.lac.co.jp/lacwatch/", "title": "", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"category": "開発ツール",
+		"color": "#687B7D",
+		"links": [
+			{ "label": "ギャップロ", "url": "http://www.gaprot.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "Gradle", "url": "http://gradle.monochromeroad.com/docs/", "title": "", "description": "", "target": "_blank" }
+		]
+	}
+]
