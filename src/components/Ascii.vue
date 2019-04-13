@@ -1,37 +1,37 @@
 <template>
   <div class="ascii">
-    <el-collapse v-model="visible">
-      <el-collapse-item title="■Asciiコード表" name="t">
-        <table>
-          <tr>
-            <th></th>
-            <template v-for='(col, ci) in cols'>
-              <th :key='ci'>{{col.label}}</th>
+    <collapse2 title="Asciiコード表">
+      <table>
+        <tr>
+          <th></th>
+          <template v-for='(col, ci) in cols'>
+            <th :key='ci'>{{col.label}}</th>
+          </template>
+        </tr>
+        <template v-for='(row, ri) in codeTable'>
+          <tr :key='ri'>
+            <th>{{row.label}}</th>
+            <template v-for='(cell, ci) in row.cells'>
+              <td :key='ci'>{{cell.label}}</td>
             </template>
           </tr>
-          <template v-for='(row, ri) in codeTable'>
-            <tr :key='ri'>
-              <th>{{row.label}}</th>
-              <template v-for='(cell, ci) in row.cells'>
-                <td :key='ci'>{{cell.label}}</td>
-              </template>
-            </tr>
-          </template>
-        </table>
-        0x20-0x7e<br/>
-        <input v-model='asciiText'/><br/>
-      </el-collapse-item>
-    </el-collapse>
+        </template>
+      </table>
+      0x20-0x7e<br/>
+      <input v-model='asciiText'/><br/>
+    </collapse2>
   </div>
 </template>
 
 <script>
+import Collapse2 from './Collapse2'
+
 export default {
   name: 'ascii',
+  components: { Collapse2 },
   data: function () {
     return {
       asciiText: '',
-      visible: [],
       codeTable: [],
       cols: []
     }
@@ -72,16 +72,6 @@ export default {
 </script>
 
 <style scoped>
-div.ascii {
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  margin: 0.1em;
-  padding: 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
-
 div.ascii table, div.ascii th, div.ascii td {
   border-collapse: collapse;
   border: 1px solid gray;

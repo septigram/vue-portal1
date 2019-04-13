@@ -1,27 +1,25 @@
 <template>
   <div class="jsonTool">
-    <el-collapse v-model='showTools'>
-      <el-collapse-item name="j">
-        <template slot="title">
-          ■JSONツール
-        </template>
-        ■整形前<br/>
-        <el-input type="textarea" :rows='20' v-model='baseJson'/><br/>
-        <el-button @click='jsonExpand()'><fa icon="arrow-down"/>展開</el-button>
-        <el-button @click='jsonComplex()'><fa icon="arrow-up"/>縮小</el-button>
-        <el-button @click='jsonBaseClear()'>↑クリア</el-button>
-        <el-button @click='jsonFmtClear()'>↓クリア</el-button>
-        <el-checkbox v-model='trimObj'>trim</el-checkbox><br/>
-        ■整形後<br/>
-        <el-input type="textarea" :rows='20' v-model='fmtJson'/><br/>
-      </el-collapse-item>
-    </el-collapse>
+    <collapse2 title="JSONツール">
+      ■整形前<br/>
+      <el-input type="textarea" :rows='20' v-model='baseJson'/><br/>
+      <el-button @click='jsonExpand()'><fa icon="arrow-down"/>展開</el-button>
+      <el-button @click='jsonComplex()'><fa icon="arrow-up"/>縮小</el-button>
+      <el-button @click='jsonBaseClear()'>↑クリア</el-button>
+      <el-button @click='jsonFmtClear()'>↓クリア</el-button>
+      <el-checkbox v-model='trimObj'>trim</el-checkbox><br/>
+      ■整形後<br/>
+      <el-input type="textarea" :rows='20' v-model='fmtJson'/><br/>
+    </collapse2>
   </div>
 </template>
 
 <script>
+import Collapse2 from './Collapse2'
+
 export default {
   name: 'jsonTool',
+  components: { Collapse2 },
   data: function () {
     return {
       showTools: [],
@@ -86,13 +84,4 @@ export default {
 </script>
 
 <style scoped>
-div.jsonTool {
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  padding: 0.1em;
-  margin: 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
 </style>

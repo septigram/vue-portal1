@@ -1,59 +1,51 @@
 <template>
   <div class="addressList">
-    <el-collapse v-model="visible">
-      <el-collapse-item name="address">
-        <template slot="title">
-          ■ ブックマーク
-        </template>
-        <el-button style="float:right;" circle @click='flipEditMode()' :type='editMode ? "success" : "normal"' title="編集モード" size="mini"><fa icon="cog"/></el-button>
-        <br style="clear:both;"/>
-        <draggable v-model='addressBook' :disabled='!editMode' :group='{ name: "addressBook"}' tag="ul" ghost-class="ghost" @change='updateTargetJsonAndSave()'>
-          <template v-for='(b, bi) in addressBook'>
-            <li class="category" :style='{ background: b.color, color: "#fff" }' :key='bi'>
-              <div class="categoryLabel">
-                <template v-if="editMode"><fa icon="align-justify" class="handle" style="font-size:small;"/></template>
-                <template v-else>■</template>
-                {{b.label}}
-                <transition name="editbutton">
-                  <el-button size="mini" style="padding: 4px;" @click='editCategory(b)' v-if='editMode'><fa icon="edit"/></el-button>
-                </transition>
-              </div>
-              <draggable v-model='b.links' :disabled='!editMode' :group='{ name: "b.links" }' tag="ul" ghost-class="ghost" @change='updateTargetJsonAndSave()'>
-                <transition-group>
-                  <template v-for='(l, lli) in b.links'>
-                    <li class="address" :key='lli'>
-                      <template v-if='editMode'>
-                        {{l.label}}
-                      </template>
-                      <template v-else>
-                        <a :href='l.url' :title='l.title' :target='l.target'>{{l.label}}</a>
-                      </template>
-                      <transition name="editbutton">
-                        <el-button v-if='editMode' size="mini" style="padding: 4px;" @click='editLink(l)'><fa icon="edit"/></el-button>
-                      </transition>
-                    </li>
-                  </template>
-                </transition-group>
-              </draggable>
+    <collapse2 title="ブックマーク" :isOpen='true'>
+      <template v-slot:header>
+        <el-button circle @click='flipEditMode()' :type='editMode ? "success" : "normal"' title="編集モード" size="mini"><fa icon="cog"/></el-button>
+      </template>
+      <draggable v-model='addressBook' :disabled='!editMode' :group='{ name: "addressBook"}' tag="ul" ghost-class="ghost" @change='updateTargetJsonAndSave()'>
+        <template v-for='(b, bi) in addressBook'>
+          <li class="category" :style='{ background: b.color, color: "#fff" }' :key='bi'>
+            <div class="categoryLabel">
+              <template v-if="editMode"><fa icon="align-justify" class="handle" style="font-size:small;"/></template>
+              <template v-else>■</template>
+              {{b.label}}
               <transition name="editbutton">
-                <el-button size="mini" style="padding: 4px;" @click='addLink(b)' v-if='editMode'><fa icon="plus"/></el-button>
+                <el-button size="mini" style="padding: 4px;" @click='editCategory(b)' v-if='editMode'><fa icon="edit"/></el-button>
               </transition>
-            </li>
-          </template>
-        </draggable>
-        <transition name="editbutton">
-          <el-button @click='addCategory()' v-if='editMode'><fa icon="plus"/>カテゴリー追加</el-button>
-        </transition>
-      </el-collapse-item>
-    </el-collapse>
-    <el-collapse >
-      <transition name="toolcollapse">
-        <el-collapse-item title="JSONデータ" v-if='editMode'>
-          <el-input type="textarea" v-model='targetJson' :rows='20'></el-input>
-          <el-button @click='updateJson()'>更新</el-button>
-        </el-collapse-item>
+            </div>
+            <draggable v-model='b.links' :disabled='!editMode' :group='{ name: "b.links" }' tag="ul" ghost-class="ghost" @change='updateTargetJsonAndSave()'>
+              <transition-group>
+                <template v-for='(l, lli) in b.links'>
+                  <li class="address" :key='lli'>
+                    <template v-if='editMode'>
+                      {{l.label}}
+                    </template>
+                    <template v-else>
+                      <a :href='l.url' :title='l.title' :target='l.target'>{{l.label}}</a>
+                    </template>
+                    <transition name="editbutton">
+                      <el-button v-if='editMode' size="mini" style="padding: 4px;" @click='editLink(l)'><fa icon="edit"/></el-button>
+                    </transition>
+                  </li>
+                </template>
+              </transition-group>
+            </draggable>
+            <transition name="editbutton">
+              <el-button size="mini" style="padding: 4px;" @click='addLink(b)' v-if='editMode'><fa icon="plus"/></el-button>
+            </transition>
+          </li>
+        </template>
+      </draggable>
+      <transition name="editbutton">
+        <el-button @click='addCategory()' v-if='editMode'><fa icon="plus"/>カテゴリー追加</el-button>
       </transition>
-    </el-collapse>
+      <collapse2 title="JSONデータ" v-if='editMode'>
+        <el-input type="textarea" v-model='targetJson' :rows='20'></el-input>
+        <el-button @click='updateJson()'>更新</el-button>
+      </collapse2>
+    </collapse2>
     <el-dialog title="ブックマーク編集" :visible.sync='showEditLink' @close='storeAddress()'>
       <templte v-if='targetLink'>
         <el-form label-width='12em'>
@@ -100,13 +92,13 @@
 
 <script>
 import draggable from 'vuedraggable'
+import Collapse2 from './Collapse2'
 
 export default {
   name: 'addressList',
-  components: { draggable },
+  components: { draggable, Collapse2 },
   data: function () {
     return {
-      visible: ['address'],
       editMode: false,
       showEditLink: false,
       showEditCategory: false,
@@ -263,15 +255,6 @@ export default {
 </script>
 
 <style>
-div.addressList {
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  margin: 0.1em;
-  padding: 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
 li.category {
   border-radius: 0.3em;
   padding: 0;
@@ -283,6 +266,7 @@ div.categoryLabel {
   padding: 0.4em;
   border-radius: 0.4em;
   margin: 0.1em;
+  line-height: 120%;
 }
 ul {
   display: inline-block;
@@ -299,22 +283,23 @@ li.address {
   border-radius: 0.4em;
   padding: 0.4em;
   margin: 0.1em;
+  line-height: 100%;
 }
-li.address a {
+li.address>a {
   text-decoration: none;
   color: #069;
 }
-li.address a:hover {
+li.address>a:hover {
   text-decoration: underline;
 }
 li.ghost {
   opacity: 0.5;
   background: #999;
 }
-.editbutton-enter-active, .editbutton-leave-active {
+button.editbutton-enter-active, button.editbutton-leave-active {
   transition: all 0.5s;
 }
-.editbutton-enter, .editbutton-leave-to {
+button.editbutton-enter, button.editbutton-leave-to {
   transform: scale(0);
 }
 </style>

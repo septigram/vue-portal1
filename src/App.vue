@@ -2,36 +2,21 @@
   <div id="app">
     <draggable v-model='components' el="ul" ghost="ghost">
       <template v-for='(component, ci) in components'>
-        <template v-if='component.type === "clock"'>
-          <li :key='ci'><clock/></li>
-        </template>
-        <template v-else-if='component.type === "calendar"'>
-          <li :key='ci'><calendar/></li>
-        </template>
-        <template v-else-if='component.type === "calendar"'>
-          <li :key='ci'><calcurator/></li>
-        </template>
-        <template v-else-if='component.type === "address-list"'>
-          <li :key='ci'><address-list/></li>
-        </template>
-        <template v-else-if='component.type === "json-tool"'>
-          <li :key='ci'><json-tool/></li>
-        </template>
-        <template v-else-if='component.type === "color-wheel"'>
-          <li :key='ci'><color-wheel/></li>
-        </template>
-        <template v-else-if='component.type === "ascii"'>
-          <li :key='ci'><ascii/></li>
-        </template>
-        <template v-else-if='component.type === "code-convert"'>
-          <li :key='ci'><code-convert/></li>
-        </template>
-        <template v-else-if='component.type === "time-convert"'>
-          <li :key='ci'><time-convert/></li>
-        </template>
-        <template v-else-if='component.type === "test"'>
-          <li :key='ci'><test/></li>
-        </template>
+        <li :key='ci'>
+          <template v-if='component.type === "clock"'><clock/></template>
+          <template v-else-if='component.type === "calendar"'><calendar/></template>
+          <template v-else-if='component.type === "calcurator"'><calcurator/></template>
+          <template v-else-if='component.type === "address-list"'><address-list/></template>
+          <template v-else-if='component.type === "json-tool"'><json-tool/></template>
+          <template v-else-if='component.type === "color-wheel"'><color-wheel/></template>
+          <template v-else-if='component.type === "ascii"'><ascii/></template>
+          <template v-else-if='component.type === "code-convert"'><code-convert/></template>
+          <template v-else-if='component.type === "time-convert"'><time-convert/></template>
+          <template v-else-if='component.type === "grep-tool"'><grep-tool/></template>
+          <template v-else-if='component.type === "memo"'><memo/></template>
+          <template v-else-if='component.type === "sub-frame"'><sub-frame/></template>
+          <template v-else-if='component.type === "test"'><test/></template>
+        </li>
       </template>
     </draggable>
   </div>
@@ -48,23 +33,31 @@ import addressList from './components/AddressList'
 import ascii from './components/Ascii'
 import codeConvert from './components/CodeConvert'
 import timeConvert from './components/TimeConvert'
+import grepTool from './components/GrepTool'
+import memo from './components/Memo'
+import subFrame from './components/SubFrame'
 import test from './components/Test'
 
 export default {
   name: 'app',
-  components: { clock, calendar, jsonTool, calcurator, colorWheel, addressList, draggable, ascii, codeConvert, timeConvert, test },
+  components: {
+    clock, calendar, jsonTool, calcurator, colorWheel, addressList,
+    draggable, ascii, codeConvert, timeConvert, grepTool, memo, subFrame, test },
   data: function () {
     return {
       components: [
         { type: 'clock' },
         { type: 'calendar' },
-        { type: 'calcurator' },
         { type: 'address-list' },
+        { type: 'calcurator' },
         { type: 'json-tool' },
         { type: 'ascii' },
         { type: 'code-convert' },
         { type: 'time-convert' },
-        { type: 'color-wheel' }
+        { type: 'color-wheel' },
+        { type: 'grep-tool' },
+        { type: 'memo' }
+        //{ type: 'sub-frame' },
         //{ type: 'test' }
       ]
     }
@@ -93,5 +86,9 @@ li {
 }
 div.el-collapse-item__content {
   padding-bottom: 0;
+}
+div.el-collapse-item__header {
+  height: 32px;
+  line-height: 32px;
 }
 </style>

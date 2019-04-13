@@ -1,35 +1,35 @@
 <template>
   <div class="test">
-    <el-collapse v-model="visible">
-      <el-collapse-item title="■テスト" name="test">
-        <el-switch v-model="cnv"/>
-        <table>
-          <tr>
+    <collapse2 title="テスト">
+      <el-switch v-model="cnv"/>
+      <table>
+        <tr>
+          <template v-for='(cm, ci) in colorMap'>
+            <td :key='ci'>
+              <input v-model='cm.l' style="width:2em;"/>
+            </td>
+          </template>
+        </tr>
+        <template v-for='(lu,li) in lus'>
+          <tr :key='li'>
             <template v-for='(cm, ci) in colorMap'>
-              <td :key='ci'>
-                <input v-model='cm.l' style="width:2em;"/>
-              </td>
+              <td :style='{ background: c(cm, lus[li]) }' :key='ci'>{{li}}&nbsp;</td>
             </template>
           </tr>
-          <template v-for='(lu,li) in lus'>
-            <tr :key='li'>
-              <template v-for='(cm, ci) in colorMap'>
-                <td :style='{ background: c(cm, lus[li]) }' :key='ci'>{{li}}&nbsp;</td>
-              </template>
-            </tr>
-          </template>
-        </table>
-      </el-collapse-item>
-    </el-collapse>
+        </template>
+      </table>
+    </collapse2>
   </div>
 </template>
 
 <script>
+import Collapse2 from './Collapse2'
+
 export default {
   name: 'test',
+  components: { Collapse2 },
   data: function () {
     return {
-      visible: [],
       cnv: false,
       lus: [],
       colorMap: [
@@ -76,15 +76,6 @@ export default {
 </script>
 
 <style scoped>
-div.test {
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  margin: 0.1em;
-  padding: 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
 tr {
   line-height: 1em;
 }

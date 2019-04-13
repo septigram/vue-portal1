@@ -1,55 +1,55 @@
 <template>
   <div class="colorWheel">
-    <el-collapse v-model="visible">
-      <el-collapse-item title="■カラーホイール" name="colorWheel">
-        <div class="vBarBox">
-          <canvas ref="canvas1" width="120" height="120" @click='setHue'/>
-        </div>
-        <div class="vBarBox">
-          彩度<br/>
-          <el-slider v-model="satuation" :max='100' @change='redraw()' vertical height="100px" style="margin: 10px 0 0 0;display: inline-block;"/>
-        </div>
-        <div class="vBarBox">
-          明度<br/>
-          <el-slider v-model="luminance" :max='100' @change='redraw()' vertical height="100px" style="margin: 10px 0 0 0;display: inline-block;"/>
-        </div>
-        <div style="display: inline-block;">
-          <div class="disp" :style='{ background: value }'></div>
-          <div class="disp" :style='{ background: hsl }'></div><br/>
-          <el-input v-model='value' @change='setValue' style="width: 6em;"/><br/>
-          <span style="font-family: monospace;font-size:small;">{{hsl}}</span><br/>
-          <el-button ref="toolButton" size="mini" @click='flipTool' :type='showTool ? "success" : "normal"'>分割</el-button>
-        </div>
-        <template v-if="showTool">
-          <el-form label-width="4em">
-            <el-form-item label="分割数">
-              <el-slider v-model="splits" :min='1' :max='24' @change='redraw()'/>
-            </el-form-item>
-            <el-form-item label="分散">
-              <el-slider v-model="degree" :min='0' :max='360' @change='redraw()'/>
-            </el-form-item>
-            <template v-for='(col, ci) in cols'>
-              <div class="disp2Box" :key='ci'>
-                {{ci + 1}}:
-                <div class="disp2" :style='{ background: col.rgb }'></div>
-                {{ col.rgb }}
-                <div class="disp2" :style='{ background: col.rgb2 }'></div>
-                {{ col.rgb2 }}
-              </div>
-            </template>
-          </el-form>
-        </template>
-      </el-collapse-item>
-    </el-collapse>
+    <collapse2 title="カラーホイール">
+      <div class="vBarBox">
+        <canvas ref="canvas1" width="120" height="120" @click='setHue'/>
+      </div>
+      <div class="vBarBox">
+        彩度<br/>
+        <el-slider v-model="satuation" :max='100' @change='redraw()' vertical height="100px" style="margin: 10px 0 0 0;display: inline-block;"/>
+      </div>
+      <div class="vBarBox">
+        明度<br/>
+        <el-slider v-model="luminance" :max='100' @change='redraw()' vertical height="100px" style="margin: 10px 0 0 0;display: inline-block;"/>
+      </div>
+      <div style="display: inline-block;">
+        <div class="disp" :style='{ background: value }'></div>
+        <div class="disp" :style='{ background: hsl }'></div><br/>
+        <el-input v-model='value' @change='setValue' style="width: 6em;"/><br/>
+        <span style="font-family: monospace;font-size:small;">{{hsl}}</span><br/>
+        <el-button ref="toolButton" size="mini" @click='flipTool' :type='showTool ? "success" : "normal"'>分割</el-button>
+      </div>
+      <template v-if="showTool">
+        <el-form label-width="4em">
+          <el-form-item label="分割数">
+            <el-slider v-model="splits" :min='1' :max='24' @change='redraw()'/>
+          </el-form-item>
+          <el-form-item label="分散">
+            <el-slider v-model="degree" :min='0' :max='360' @change='redraw()'/>
+          </el-form-item>
+          <template v-for='(col, ci) in cols'>
+            <div class="disp2Box" :key='ci'>
+              {{ci + 1}}:
+              <div class="disp2" :style='{ background: col.rgb }'></div>
+              {{ col.rgb }}
+              <div class="disp2" :style='{ background: col.rgb2 }'></div>
+              {{ col.rgb2 }}
+            </div>
+          </template>
+        </el-form>
+      </template>
+    </collapse2>
   </div>
 </template>
 
 <script>
+import Collapse2 from './Collapse2'
+
 export default {
   name: 'colorWheel',
+  components: { Collapse2 },
   data: function () {
     return {
-      visible: [],
       showTool: false,
       value: '#000000',
       hue: 0,
@@ -291,16 +291,6 @@ export default {
 </script>
 
 <style scoped>
-div.colorWheel {
-  width: 300px;
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  margin: 0.1em;
-  padding: 0.1em 12px 0.1em 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
 div.disp {
   display: inline-block;
   position: relative;

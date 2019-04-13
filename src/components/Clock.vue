@@ -1,21 +1,24 @@
 <template>
   <div class="clock">
-    <el-collapse v-model="visible">
-      <el-collapse-item title="■時計" name="clock">
-        <canvas ref="clock1" width="120" height="120"/><br/>
-        <div class="disp">{{now|ftime}}</div>
-      </el-collapse-item>
-    </el-collapse>
+    <collapse2 title="時計" :isOpen='true' :showHeader='false'>
+      <canvas ref="clock1" width="120" height="120"/><br/>
+      <div class="disp1">{{now1|ftime}}</div>
+      <div class="disp2">{{now2|ftime}}</div>
+    </collapse2>
   </div>
 </template>
 
 <script>
+import Collapse2 from './Collapse2'
+
 export default {
   name: 'clock',
+  components: { Collapse2 },
   data: function () {
     return {
-      visible: ['clock'],
-      now: new Date()
+      now: new Date(),
+      now1: null,
+      now2: null
     }
   },
   mounted: function () {
@@ -56,10 +59,12 @@ export default {
       const h = this.now.getHours()
       const m = this.now.getMinutes()
       const s = this.now.getSeconds()
+      this.now1 = m >= 20 && m <= 40 ? null : this.now
+      this.now2 = m >= 20 && m <= 40 ? this.now : null
       const vs = [
         { th: (h + m / 60 - 3) * 2 * Math.PI / 12, lineWidth: 6, color: '#000', r1: 30, r2: -5 },
-        { th: (m - 15) * 2 * Math.PI / 60, lineWidth: 4, color: '#000', r1: 50, r2: -5 },
-        { th: (s - 15) * 2 * Math.PI / 60, lineWidth: 2, color: '#c00', r1: 45, r2: -5, r3: 5 },
+        { th: (m - 15) * 2 * Math.PI / 60, lineWidth: 4, color: '#000', r1: m % 5 === 0 ? 47 : 50, r2: -5 },
+        { th: (s - 15) * 2 * Math.PI / 60, lineWidth: 2, color: '#09c', r1: s % 5 === 0 ? 44 : 47, r2: -5, r3: 3 }
       ]
       vs.forEach((v) => {
         g.lineWidth = v.lineWidth
@@ -88,6 +93,7 @@ export default {
   },
   filters: {
     ftime: function (d) {
+      if (d === null) { return '' }
       const h = d.getHours()
       const m = d.getMinutes()
       const s = d.getSeconds()
@@ -98,19 +104,18 @@ export default {
 </script>
 
 <style scoped>
-div.clock {
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  margin: 0.1em;
-  padding: 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
-div.disp {
+div.disp1, div.disp2 {
+  position: absolute;
+  height: 1.5em;
   width: 120px;
   text-align: center;
-  font-size: small;
+  font-size: x-small;
   font-weight: bold;
+}
+div.disp1 {
+  top: 134px;
+}
+div.disp2 {
+  top: 60px;
 }
 </style>

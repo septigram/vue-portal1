@@ -1,47 +1,49 @@
 <template>
   <div class="calendar">
-    <el-collapse v-model="visible">
-      <el-collapse-item title="■カレンダー" name="calendar">
+    <collapse2 title="カレンダー" :isOpen='true'>
+      <template v-slot:header>
         <el-button @click='goThisMonth()' circle size="mini" style="float:right;"><fa icon="home"/></el-button>
-        <el-button @click='addMonth(-1)' circle size="mini" class="middle"><fa icon="arrow-left"/></el-button>
-        <template v-for='(calendar, ci) in calendars'>
-          <table :key='ci' class="calendar">
-            <tr>
-              <th colspan="7" class="HEAD">{{calendar.year}}/{{calendar.month}}</th>
-            </tr>
-            <tr>
-              <template v-for='(head, hi) in heads'>
-                <th :key='hi' :class='heads[(hi + dayOfWeekHead) % 7]'>{{heads[(hi + dayOfWeekHead) % 7]}}</th>
+      </template>
+      <el-button @click='addMonth(-1)' circle size="mini" class="middle"><fa icon="arrow-left"/></el-button>
+      <template v-for='(calendar, ci) in calendars'>
+        <table :key='ci' class="calendar">
+          <tr>
+            <th colspan="7" class="HEAD">{{calendar.year}}/{{calendar.month}}</th>
+          </tr>
+          <tr>
+            <template v-for='(head, hi) in heads'>
+              <th :key='hi' :class='heads[(hi + dayOfWeekHead) % 7]'>{{heads[(hi + dayOfWeekHead) % 7]}}</th>
+            </template>
+          </tr>
+          <template v-for='(week, wi) in calendar.weeks'>
+            <tr :key='wi'>
+              <template v-for='(day, di) in week.days'>
+                <template v-if='day.inMonth'>
+                  <td :key='di' :class='day.class' :title='day.holiday'>
+                    {{day.date}}
+                  </td>
+                </template>
+                <template v-else>
+                  <td :key='di' class="NONE">&nbsp;</td>
+                </template>
               </template>
             </tr>
-            <template v-for='(week, wi) in calendar.weeks'>
-              <tr :key='wi'>
-                <template v-for='(day, di) in week.days'>
-                  <template v-if='day.inMonth'>
-                    <td :key='di' :class='day.class' :title='day.holiday'>
-                      {{day.date}}
-                    </td>
-                  </template>
-                  <template v-else>
-                    <td :key='di' class="NONE">&nbsp;</td>
-                  </template>
-                </template>
-              </tr>
-            </template>
-          </table>
-        </template>
-        <el-button @click='addMonth(+1)' circle size="mini" class="middle"><fa icon="arrow-right"/></el-button>
-      </el-collapse-item>
-    </el-collapse>
+          </template>
+        </table>
+      </template>
+      <el-button @click='addMonth(+1)' circle size="mini" class="middle"><fa icon="arrow-right"/></el-button>
+    </collapse2>
   </div>
 </template>
 
 <script>
+import Collapse2 from './Collapse2'
+
 export default {
   name: 'calendar',
+  components: { Collapse2 },
   data: function () {
     return {
-      visible: ['calendar'],
       calendars: [],
       diffMonth: 0,
       dayOfWeekHead: 0, // 0:日曜始まり, 1:月曜始まり
@@ -154,15 +156,6 @@ export default {
 </script>
 
 <style scoped>
-div.calendar {
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  padding: 0.1em;
-  margin: 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
 .el-button.top {
   position: absolute;
 }

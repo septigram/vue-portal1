@@ -1,38 +1,42 @@
 <template>
   <div class="calculator">
-    ■電卓<br/>
-    <div class="disp">
-      {{dispValue}}
-    </div>
-    <el-button @click='input(7)' size="mini">7</el-button>
-    <el-button @click='input(8)' size="mini">8</el-button>
-    <el-button @click='input(9)' size="mini">9</el-button>
-    <el-button @click='input("*")' size="mini">*</el-button>
-    <el-button @click='input("C")' size="mini">C</el-button>
-    <br/>
-    <el-button @click='input(4)' size="mini">4</el-button>
-    <el-button @click='input(5)' size="mini">5</el-button>
-    <el-button @click='input(6)' size="mini">6</el-button>
-    <el-button @click='input("/")' size="mini">/</el-button>
-    <el-button @click='input("BS")' size="mini">BS</el-button>
-    <br/>
-    <el-button @click='input(1)' size="mini">1</el-button>
-    <el-button @click='input(2)' size="mini">2</el-button>
-    <el-button @click='input(3)' size="mini">3</el-button>
-    <el-button @click='input("-")' size="mini">-</el-button>
-    <br/>
-    <el-button @click='input(0)' size="mini">0</el-button>
-    <el-button @click='input("00")' size="mini">00</el-button>
-    <el-button @click='input(".")' size="mini">.</el-button>
-    <el-button @click='input("+")' size="mini">+</el-button>
-    <el-button @click='input("=")' size="mini">=</el-button>
-    <br/>
+    <collapse2 title="電卓">
+      <div class="disp">
+        {{dispValue}}<br/>
+        <span style="font-size: small;">{{dispValue|hex}}</span>
+      </div>
+      <el-button @click='input(7)' size="mini">7</el-button>
+      <el-button @click='input(8)' size="mini">8</el-button>
+      <el-button @click='input(9)' size="mini">9</el-button>
+      <el-button @click='input("*")' size="mini">*</el-button>
+      <el-button @click='input("C")' size="mini">C</el-button>
+      <br/>
+      <el-button @click='input(4)' size="mini">4</el-button>
+      <el-button @click='input(5)' size="mini">5</el-button>
+      <el-button @click='input(6)' size="mini">6</el-button>
+      <el-button @click='input("/")' size="mini">/</el-button>
+      <el-button @click='input("BS")' size="mini">BS</el-button>
+      <br/>
+      <el-button @click='input(1)' size="mini">1</el-button>
+      <el-button @click='input(2)' size="mini">2</el-button>
+      <el-button @click='input(3)' size="mini">3</el-button>
+      <el-button @click='input("-")' size="mini">-</el-button>
+      <br/>
+      <el-button @click='input(0)' size="mini">0</el-button>
+      <el-button @click='input("00")' size="mini">00</el-button>
+      <el-button @click='input(".")' size="mini">.</el-button>
+      <el-button @click='input("+")' size="mini">+</el-button>
+      <el-button @click='input("=")' size="mini">=</el-button>
+    </collapse2>
   </div>
 </template>
 
 <script>
+import Collapse2 from './Collapse2'
+
 export default {
   name: 'calculator',
+  components: { Collapse2 },
   data: function () {
     return {
       inputValue: '0',
@@ -139,20 +143,16 @@ export default {
         this.inputValue = null
       }
     }
+  },
+  filters: {
+    hex: function (v) {
+      return isNaN(v - 0) ? v : (v - 0).toString(16)
+    }
   }
 }
 </script>
 
 <style scoped>
-div.calculator {
-  border: 1px solid gray;
-  border-radius: 0.5em;
-  margin: 0.1em;
-  padding: 0.1em;
-  vertical-align: top;
-  display: inline-block;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.4)
-}
 div.disp {
   border: 1px solid gray;
   border-radius: 0.2em;
@@ -162,6 +162,7 @@ div.disp {
   text-align: right;
   font-size: x-large;
   font-weight: bold;
+  line-height: 100%;
 }
 button.el-button {
   padding: 0;
