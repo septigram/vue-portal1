@@ -15,6 +15,7 @@
           <template v-else-if='component.type === "grep-tool"'><grep-tool/></template>
           <template v-else-if='component.type === "memo"'><memo/></template>
           <template v-else-if='component.type === "sub-frame"'><sub-frame/></template>
+          <template v-else-if='component.type === "sudoku"'><sudoku/></template>
           <template v-else-if='component.type === "test"'><test/></template>
         </li>
       </template>
@@ -36,13 +37,14 @@ import timeConvert from './components/TimeConvert'
 import grepTool from './components/GrepTool'
 import memo from './components/Memo'
 import subFrame from './components/SubFrame'
+import sudoku from './components/Sudoku'
 import test from './components/Test'
 
 export default {
   name: 'app',
   components: {
     clock, calendar, jsonTool, calcurator, colorWheel, addressList,
-    draggable, ascii, codeConvert, timeConvert, grepTool, memo, subFrame, test },
+    draggable, ascii, codeConvert, timeConvert, grepTool, memo, subFrame, sudoku, test },
   data: function () {
     return {
       components: [
@@ -56,8 +58,9 @@ export default {
         { type: 'time-convert' },
         { type: 'color-wheel' },
         { type: 'grep-tool' },
-        { type: 'memo' }
-        //{ type: 'sub-frame' },
+        { type: 'memo' },
+        { type: 'sub-frame' },
+        { type: 'sudoku' }
         //{ type: 'test' }
       ]
     }

@@ -1,0 +1,40 @@
+[
+	{
+		"label": "vue.js",
+		"color": "#168923",
+		"links": [
+			{ "label": "vue.js", "url": "https://jp.vuejs.org/v2/api/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "element-ui", "url": "http://element.eleme.io/#/en-US/component/layout", "title": "", "description": "", "target": "_blank" },
+			{ "label": "vuex.js", "url": "https://vuex.vuejs.org/ja/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "fontawesome", "url": "https://fontawesome.com/icons?d=gallery&m=free", "title": "", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"label": "javascript",
+		"color": "#688E6C",
+		"links": [
+			{ "label": "MDN JavaScript", "url": "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array", "title": "", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"label": "HTML",
+		"color": "#52818B",
+		"links": [
+			{ "label": "MDN HTML", "url": "https://developer.mozilla.org/ja/docs/Web/HTML", "title": "", "description": "", "target": "_blank" },
+			{ "label": "MDN CSS", "url": "https://developer.mozilla.org/ja/docs/Web/CSS", "title": "", "description": "", "target": "_blank" }
+		]
+	},
+	{
+		"label": "セキュリティ",
+		"color": "#845F8B",
+		"links": [
+			{ "label": "JVN", "url": "https://jvn.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "IT dashboard", "url": "https://www.itdashboard.go.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "セキュリティホールmemo", "url": "http://www.st.ryukoku.ac.jp/~kjm/security/memo/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "スラド", "url": "https://srad.jp/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "vuls", "url": "https://vuls.io/ja/", "title": "", "description": "", "target": "_blank" },
+			{ "label": "IPA：情報セキュリティ", "url": "http://www.ipa.go.jp/security/index.html", "title": "", "description": "", "target": "_blank" },
+			{ "label": "LAC", "url": "https://www.lac.co.jp/", "title": "", "description": "", "target": "_blank" }
+		]
+	}
+]
