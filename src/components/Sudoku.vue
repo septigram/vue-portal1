@@ -70,7 +70,6 @@ export default {
   data: function () {
     return {
       board: {
-        // 固定, 空, 数値
         rows: []
       },
       stage: -1,
@@ -81,7 +80,7 @@ export default {
       buttons: [],
       guides: [],
       selectNum: 1,
-      showGuide: true,
+      showGuide: false,
       samples: [
         '724596381580000064901080502800020006309618705600050003406030107270000039135967248',
         '068192340729000158010785020805209604604010209102603805040327080287000463051864790',
