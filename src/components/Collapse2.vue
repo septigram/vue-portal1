@@ -2,17 +2,17 @@
   <div class="collapse2">
     <div class="collapse2Header">
       <transition name="fade">
-        <div v-if='isOpen' class="collapse2Navi">
+        <div v-if='state' class="collapse2Navi">
           <slot name="header"/>
         </div>
       </transition>
       <div v-if='showHeader' @click='onclick()' class="collapse2Title">
-        <div :class='{ hicon: true, arrowRot: isOpen}'><fa icon="angle-right"/></div>
+        <div :class='{ hicon: true, arrowRot: state}'><fa icon="angle-right"/></div>
         &nbsp;{{title}}
       </div>
       <br style="clear:both;"/>
     </div>
-    <div :class='{collapse2Slot: true, collapse2SlotShow: isOpen}'>
+    <div :class='{collapse2Slot: true, collapse2SlotShow: state}'>
       <slot/>
     </div>
   </div>
@@ -36,13 +36,12 @@ export default {
   },
   data: function () {
     return {
+      state: this.isOpen
     }
   },
   methods: {
     onclick: function () {
-      // eslint-disable-next-line 
-      console.log('onlick')
-      this.isOpen = !this.isOpen
+      this.state = !this.state
     }
   }
 }
