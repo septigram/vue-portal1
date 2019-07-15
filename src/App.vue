@@ -59,9 +59,9 @@ export default {
         { type: 'color-wheel' },
         { type: 'grep-tool' },
         { type: 'memo' },
-        { type: 'sub-frame' },
+        // { type: 'sub-frame' },
         { type: 'sudoku' }
-        //{ type: 'test' }
+        // { type: 'test' }
       ]
     }
   }
