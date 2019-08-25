@@ -2,36 +2,45 @@
   <div class="addressList">
     <collapse2 title="ブックマーク" :isOpen='true'>
       <template v-slot:header>
+        <el-button circle @click='foldAll(false)' size="mini" title="すべて開く" class="foldButton"><i class="el-icon-plus"></i></el-button>
+        <el-button circle @click='foldAll(true)' size="mini" title="すべて閉じる" class="foldButton"><i class="el-icon-minus"></i></el-button>
         <el-button circle @click='flipEditMode()' :type='editMode ? "success" : "normal"' title="編集モード" size="mini"><fa icon="cog"/></el-button>
       </template>
       <draggable v-model='addressBook' :disabled='!editMode' :group='{ name: "addressBook"}' tag="ul" ghost-class="ghost" @change='updateTargetJsonAndSave()'>
         <template v-for='(b, bi) in addressBook'>
           <li class="category" :style='{ background: b.color, color: "#fff" }' :key='bi'>
             <div class="categoryLabel">
-              <template v-if="editMode"><fa icon="align-justify" class="handle" style="font-size:small;"/></template>
-              <template v-else>■</template>
+              <transition name="editbutton">
+                <template v-if="editMode"><fa icon="align-justify" class="handle" style="font-size:small;"/></template>
+                <template v-else>
+                  <el-button v-if='b.fold' size="mini" style="padding: 4px;" @click='b.fold = false'><i class="el-icon-plus"></i></el-button>
+                  <el-button v-else size="mini" style="padding: 4px;" @click='b.fold = true'><i class="el-icon-minus"></i></el-button>
+                </template>
+              </transition>
               {{b.label}}
               <transition name="editbutton">
                 <el-button size="mini" style="padding: 4px;" @click='editCategory(b)' v-if='editMode'><fa icon="edit"/></el-button>
               </transition>
             </div>
-            <draggable v-model='b.links' :disabled='!editMode' :group='{ name: "b.links" }' tag="ul" ghost-class="ghost" @change='updateTargetJsonAndSave()'>
-              <transition-group>
-                <template v-for='(l, lli) in b.links'>
-                  <li class="address" :key='lli'>
-                    <template v-if='editMode'>
-                      {{l.label}}
-                    </template>
-                    <template v-else>
-                      <a :href='l.url' :title='l.title' :target='l.target'>{{l.label}}</a>
-                    </template>
-                    <transition name="editbutton">
-                      <el-button v-if='editMode' size="mini" style="padding: 4px;" @click='editLink(l)'><fa icon="edit"/></el-button>
-                    </transition>
-                  </li>
-                </template>
-              </transition-group>
-            </draggable>
+            <template v-if='!b.fold || editMode'>
+              <draggable v-model='b.links' :disabled='!editMode' :group='{ name: "b.links" }' tag="ul" ghost-class="ghost" @change='updateTargetJsonAndSave()'>
+                <transition-group>
+                  <template v-for='(l, lli) in b.links'>
+                    <li class="address" :key='lli'>
+                      <template v-if='editMode'>
+                        {{l.label}}
+                      </template>
+                      <template v-else>
+                        <a :href='l.url' :title='l.title' :target='l.target'>{{l.label}}</a>
+                      </template>
+                      <transition name="editbutton">
+                        <el-button v-if='editMode' size="mini" style="padding: 4px;" @click='editLink(l)'><fa icon="edit"/></el-button>
+                      </transition>
+                    </li>
+                  </template>
+                </transition-group>
+              </draggable>
+            </template>
             <transition name="editbutton">
               <el-button size="mini" style="padding: 4px;" @click='addLink(b)' v-if='editMode'><fa icon="plus"/></el-button>
             </transition>
@@ -48,9 +57,13 @@
     </collapse2>
     <el-dialog title="ブックマーク編集" :visible.sync='showEditLink' @close='storeAddress()'>
       <templte v-if='targetLink'>
-        <el-form label-width='12em'>
+        <el-form label-width='6em'>
           <el-form-item label="表示名">
             <el-input v-model='targetLink.label'/>
+          </el-form-item>
+          <el-form-item>
+            <el-radio v-model='targetLink.type' label="l">リンク</el-radio>
+            <el-radio v-model='targetLink.type' label="f">フォルダー</el-radio>
           </el-form-item>
           <el-form-item label="URL">
             <el-input v-model='targetLink.url'/>
@@ -73,7 +86,7 @@
     </el-dialog>
     <el-dialog title="カテゴリ編集" :visible.sync='showEditCategory' @close='storeAddress()'>
       <templte v-if='targetCategory'>
-        <el-form label-width='12em'>
+        <el-form label-width='6em'>
           <el-form-item label="表示名">
             <el-input v-model='targetCategory.label'/>
           </el-form-item>
@@ -106,7 +119,8 @@ export default {
       targetCategory: null,
       targetJson: '',
       trimObj: true,
-      addressBook: []
+      addressBook: [],
+      openFolder: null
     }
   },
   mounted: function () {
@@ -163,7 +177,8 @@ export default {
       const target = {
         label: '',
         color: null,
-        links: []
+        links: [],
+        fold: false
       }
       this.targetCategory = target
       this.addressBook.push(target)
@@ -249,6 +264,11 @@ export default {
         v = vs.join('\n')
       }
       return v
+    },
+    foldAll: function (b) {
+      this.addressBook.forEach((a) => {
+        a.fold = b
+      })
     }
   }
 }
@@ -301,5 +321,8 @@ button.editbutton-enter-active, button.editbutton-leave-active {
 }
 button.editbutton-enter, button.editbutton-leave-to {
   transform: scale(0);
+}
+div.foldButton {
+  background: rgba(255,255,255,0.5);
 }
 </style>
