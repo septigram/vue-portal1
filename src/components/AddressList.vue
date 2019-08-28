@@ -19,7 +19,12 @@
               </transition>
               {{b.label}}
               <transition name="editbutton">
-                <el-button size="mini" style="padding: 4px;" @click='editCategory(b)' v-if='editMode'><fa icon="edit"/></el-button>
+                <template v-if='editMode'>
+                  <el-button size="mini" style="padding: 4px;" @click='editCategory(b)'><fa icon="edit"/></el-button>
+                </template>
+                <template v-else-if='b.openAll'>
+                  <el-button size="mini" style="padding: 4px;" @click='openAll(b)' title="すべて開く"><fa icon="external-link-alt"/></el-button>
+                </template>
               </transition>
             </div>
             <template v-if='!b.fold || editMode'>
@@ -56,7 +61,7 @@
       </collapse2>
     </collapse2>
     <el-dialog title="ブックマーク編集" :visible.sync='showEditLink' @close='storeAddress()'>
-      <templte v-if='targetLink'>
+      <template v-if='targetLink'>
         <el-form label-width='6em'>
           <el-form-item label="表示名">
             <el-input v-model='targetLink.label'/>
@@ -82,10 +87,10 @@
             <el-button @click='deleteEdit(targetLink)' type="danger">削除する</el-button>
           </el-form-item>
         </el-form>
-      </templte>
+      </template>
     </el-dialog>
     <el-dialog title="カテゴリ編集" :visible.sync='showEditCategory' @close='storeAddress()'>
-      <templte v-if='targetCategory'>
+      <template v-if='targetCategory'>
         <el-form label-width='6em'>
           <el-form-item label="表示名">
             <el-input v-model='targetCategory.label'/>
@@ -94,11 +99,14 @@
             <el-color-picker v-model='targetCategory.color'/>
           </el-form-item>
           <el-form-item>
+            <el-checkbox v-model='targetCategory.openAll'>まとめて開く</el-checkbox>
+          </el-form-item>
+          <el-form-item>
             <el-button @click='closeEditCategory()' type="success">閉じる</el-button>
             <el-button @click='deleteEditCategory(targetCategory)' type="danger">削除する</el-button>
           </el-form-item>
         </el-form>
-      </templte>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -178,7 +186,8 @@ export default {
         label: '',
         color: null,
         links: [],
-        fold: false
+        fold: false,
+        openAll: false
       }
       this.targetCategory = target
       this.addressBook.push(target)
@@ -212,6 +221,11 @@ export default {
         this.targetJson = window.localStorage.getItem('address')
         if (this.targetJson) {
           this.addressBook = JSON.parse(this.targetJson)
+          this.addressBook.forEach((c) => {
+            if (c.openAll === undefined) {
+              this.set(c, 'openAll', false)
+            }
+          })
         }
       }
     },
@@ -269,7 +283,14 @@ export default {
       this.addressBook.forEach((a) => {
         a.fold = b
       })
+    },
+    openAll: function (c) {
+      for (let i = 0; i < c.links.length; i++) {
+        const l = c.links[i]
+        window.open(l.url, '_blank')
+      }
     }
+
   }
 }
 </script>

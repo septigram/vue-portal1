@@ -1,6 +1,6 @@
 <template>
   <div class="checkToday">
-    <collapse2 title="毎日チェック">
+    <collapse2 title="毎日チェック" :isOpen='store.openWhenNoCheck && !checked'>
       <div>
         <template v-if='checked'>
           <div class="checked">チェック済</div>
@@ -8,7 +8,9 @@
         <template v-else>
           <el-button type="primary" @click='onCheck'>チェック</el-button>
         </template>
-        <el-input type="textarea" :rows='5' :value='dates'/>
+        &nbsp;
+        <el-checkbox v-model='store.openWhenNoCheck' @change='storeChecks()'><span style="font-size:small;"> 未チェック時に開く</span></el-checkbox>
+        <el-input type="textarea" :rows='5' v-model='store.checkTimes' @change='storeChecks()'/>
       </div>
     </collapse2>
   </div>
@@ -22,40 +24,32 @@ export default {
   components: { Collapse2 },
   data: function () {
     return {
-      checkTimes: []
+      store: {
+        openWhenNoCheck: true,
+        checkTimes: ''
+      }
     }
   },
   computed: {
     checked: function () {
-      if (this.checkTimes.length === 0) {
+      if (this.store.checkTimes.length === 0) {
         return false
       }
       const d = new Date()
       const ymd = d.getFullYear() + '/' + this.n2(d.getMonth() + 1) + '/' + this.n2(d.getDate())
-      const lymd = this.checkTimes[0].substring(0, 10)
+      const lines = this.store.checkTimes.split('\n')
+      const lymd = lines[0].substring(0, 10)
       return lymd >= ymd
-    },
-    dates: function () {
-      if (this.checkTimes.length === 0) {
-        return ''
-      }
-      const vs = []
-      for (let i = 0; i < 10; i++) {
-        if (i < this.checkTimes.length) {
-          vs.push(this.checkTimes[i])
-        }
-      }
-      return vs.join('\n')
     }
   },
-  mounted: function () {
+  created: function () {
     this.loadChecks()
   },
   methods: {
     onCheck: function () {
       const d = new Date()
       const ymdhm = d.getFullYear() + '/' + this.n2(d.getMonth() + 1) + '/' + this.n2(d.getDate()) + ' ' + this.n2(d.getHours()) + ':' + this.n2(d.getMinutes())
-      this.checkTimes.splice(0, 0, ymdhm)
+      this.store.checkTimes = ymdhm + '\n' + this.store.checkTimes
       this.storeChecks()
     },
     n2: function (n) {
@@ -63,14 +57,14 @@ export default {
     },
     storeChecks: function () {
       if (window.localStorage) {
-        window.localStorage.setItem('checks', JSON.stringify(this.checkTimes))
+        window.localStorage.setItem('checks', JSON.stringify(this.store))
       }
     },
     loadChecks: function () {
       if (window.localStorage) {
         const json = window.localStorage.getItem('checks')
         if (json) {
-          this.checkTimes = JSON.parse(json)
+          this.store = JSON.parse(json)
         }
       }
     }
@@ -82,8 +76,9 @@ export default {
 div.checked {
   display: inline-block;
   border: 1px solid green;
-  border-radius: 0.2em;
+  color: green;
+  border-radius: 0.3em;
   background: #efe;
-  padding: 0.2em;
+  padding: 0.5em 1em;
 }
 </style>
