@@ -66,10 +66,6 @@
           <el-form-item label="表示名">
             <el-input v-model='targetLink.label'/>
           </el-form-item>
-          <el-form-item>
-            <el-radio v-model='targetLink.type' label="l">リンク</el-radio>
-            <el-radio v-model='targetLink.type' label="f">フォルダー</el-radio>
-          </el-form-item>
           <el-form-item label="URL">
             <el-input v-model='targetLink.url'/>
           </el-form-item>
