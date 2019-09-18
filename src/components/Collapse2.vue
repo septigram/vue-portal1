@@ -42,6 +42,9 @@ export default {
   methods: {
     onclick: function () {
       this.state = !this.state
+    },
+    setState: function (b) {
+      this.state = b
     }
   }
 }

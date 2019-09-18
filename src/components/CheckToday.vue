@@ -1,6 +1,6 @@
 <template>
   <div class="checkToday">
-    <collapse2 title="毎日チェック" :isOpen='store.openWhenNoCheck && !checked'>
+    <collapse2 title="毎日チェック" ref="c" :isOpen='store.openWhenNoCheck && !checked'>
       <div>
         <template v-if='checked'>
           <div class="checked">チェック済</div>
@@ -51,6 +51,7 @@ export default {
       const ymdhm = d.getFullYear() + '/' + this.n2(d.getMonth() + 1) + '/' + this.n2(d.getDate()) + ' ' + this.n2(d.getHours()) + ':' + this.n2(d.getMinutes())
       this.store.checkTimes = ymdhm + '\n' + this.store.checkTimes
       this.storeChecks()
+      this.$refs.c.setState(false)
     },
     n2: function (n) {
       return (n < 10 ? '0' : '') + n
