@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <draggable v-model='components' el="ul" ghost="ghost">
-      <template v-for='(component, ci) in components'>
-        <li :key='ci'>
+    <div style="float:right;">
+      <el-button @click='showComponentEdit=true' size="mini"><fa icon="cog"/></el-button>
+    </div>
+    <template v-for='(component, ci) in components'>
+      <li :key='ci'>
+        <template v-if='component.checked'>
           <template v-if='component.type === "clock"'><clock/></template>
           <template v-else-if='component.type === "calendar"'><calendar/></template>
           <template v-else-if='component.type === "calcurator"'><calcurator/></template>
@@ -19,9 +22,23 @@
           <template v-else-if='component.type === "check-today"'><check-today/></template>
           <template v-else-if='component.type === "gen-password"'><gen-password/></template>
           <template v-else-if='component.type === "test"'><test/></template>
-        </li>
-      </template>
-    </draggable>
+        </template>
+      </li>
+    </template>
+    <el-dialog :visible.sync='showComponentEdit' title="表示コンポーネント">
+      <div class="componentList">
+        <draggable v-model='components' el="div" ghost="ghost">
+          <template v-for='(component, ci) in components'>
+            <div :key='ci'>
+              <el-checkbox v-model='component.checked'>{{component.name}}</el-checkbox>
+            </div>
+          </template>
+        </draggable>
+      </div>
+      <el-row type="flex" justify="center">
+        <el-button type="primary" @click='update()'>閉じる</el-button>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
@@ -51,24 +68,41 @@ export default {
     draggable, ascii, codeConvert, timeConvert, grepTool, memo, subFrame, checkToday, sudoku, genPassword, test },
   data: function () {
     return {
+      showComponentEdit: false,
       components: [
-        { type: 'clock' },
-        { type: 'calendar' },
-        { type: 'address-list' },
-        { type: 'calcurator' },
-        { type: 'json-tool' },
-        { type: 'ascii' },
-        { type: 'code-convert' },
-        { type: 'time-convert' },
-        { type: 'color-wheel' },
-        { type: 'grep-tool' },
-        { type: 'memo' },
-        { type: 'check-today' },
-        { type: 'gen-password' },
-        // { type: 'sub-frame' },
-        { type: 'sudoku' }
-        // { type: 'test' }
+        { name: '時計', type: 'clock', checked: true },
+        { name: 'カレンダー', type: 'calendar', checked: true },
+        { name: 'ブックマーク', type: 'address-list', checked: true },
+        { name: '計算機', type: 'calcurator', checked: true },
+        { name: 'JSON変換', type: 'json-tool', checked: true },
+        { name: 'ASCII表', type: 'ascii', checked: true },
+        { name: 'URL変換', type: 'code-convert', checked: true },
+        { name: 'UNIX時間変換', type: 'time-convert', checked: true },
+        { name: 'カラーホイール', type: 'color-wheel', checked: true },
+        { name: 'grep', type: 'grep-tool', checked: true },
+        { name: 'ちょいメモ', type: 'memo', checked: true },
+        { name: '毎日チェック', type: 'check-today', checked: true },
+        { name: 'パスワード生成', type: 'gen-password', checked: true },
+        // { name: '', type: 'sub-frame', checked: true },
+        { name: 'ナンプレ', type: 'sudoku', checked: true }
+        // { name: '', type: 'test', checked: true }
       ]
+    }
+  },
+  created: function () {
+    if (window.localStorage) {
+      const comp = window.localStorage.getItem('vue-portal1-comp')
+      if (comp) {
+        this.components = JSON.parse(comp)
+      }
+    }
+  },
+  methods: {
+    update: function () {
+      this.showComponentEdit = false
+      if (window.localStorage) {
+        window.localStorage.setItem('vue-portal1-comp', JSON.stringify(this.components))
+      }
     }
   }
 }
