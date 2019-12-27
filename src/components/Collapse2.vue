@@ -87,8 +87,9 @@ div.collapse2Slot {
   overflow: hidden;
 }
 div.collapse2SlotShow {
-  max-height: 1024px;
+  max-height: 800px;
   max-width: 1024px;
+  overflow: auto;
 }
 div.fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
