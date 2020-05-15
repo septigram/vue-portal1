@@ -217,9 +217,10 @@ export default {
         this.targetJson = window.localStorage.getItem('address')
         if (this.targetJson) {
           this.addressBook = JSON.parse(this.targetJson)
+          const t = this
           this.addressBook.forEach((c) => {
             if (c.openAll === undefined) {
-              this.set(c, 'openAll', false)
+              t.$set(c, 'openAll', false)
             }
           })
         }

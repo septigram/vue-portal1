@@ -42,7 +42,7 @@ export default {
       alphaUpperFlag: true,
       numbersFlag: true,
       symbolsFlag: false,
-      passwdLength: 8
+      passwdLength: 16
     }
   },
   methods: {

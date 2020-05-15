@@ -21,6 +21,7 @@
           <template v-else-if='component.type === "sudoku"'><sudoku/></template>
           <template v-else-if='component.type === "check-today"'><check-today/></template>
           <template v-else-if='component.type === "gen-password"'><gen-password/></template>
+          <template v-else-if='component.type === "bulls-and-cows"'><bulls-and-cows/></template>
           <template v-else-if='component.type === "test"'><test/></template>
         </template>
       </li>
@@ -59,13 +60,14 @@ import subFrame from './components/SubFrame'
 import sudoku from './components/Sudoku'
 import checkToday from './components/CheckToday'
 import genPassword from './components/GenPassword'
+import bullsAndCows from './components/BullsAndCows'
 import test from './components/Test'
 
 export default {
   name: 'app',
   components: {
     clock, calendar, jsonTool, calcurator, colorWheel, addressList,
-    draggable, ascii, codeConvert, timeConvert, grepTool, memo, subFrame, checkToday, sudoku, genPassword, test },
+    draggable, ascii, codeConvert, timeConvert, grepTool, memo, subFrame, checkToday, sudoku, genPassword, bullsAndCows, test },
   data: function () {
     return {
       showComponentEdit: false,
@@ -84,7 +86,8 @@ export default {
         { name: '毎日チェック', type: 'check-today', checked: true },
         { name: 'パスワード生成', type: 'gen-password', checked: true },
         // { name: '', type: 'sub-frame', checked: true },
-        { name: 'ナンプレ', type: 'sudoku', checked: true }
+        { name: 'ナンプレ', type: 'sudoku', checked: true },
+        { name: 'Bulls and Cows', type: 'bulls-and-cows', checked: true },
         // { name: '', type: 'test', checked: true }
       ]
     }
@@ -94,6 +97,15 @@ export default {
       const comp = window.localStorage.getItem('vue-portal1-comp')
       if (comp) {
         this.components = JSON.parse(comp)
+        let hasBullsAndCows = false
+        this.components.forEach((c) => { if (c.type === 'bulls-and-cows') { hasBullsAndCows = true; }})
+        if (!hasBullsAndCows) {
+          this.components.push({
+            name: 'Bulls and Cows',
+            type: 'bulls-and-cows',
+            checked: true
+          })
+        }
       }
     }
   },
