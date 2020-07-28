@@ -1,7 +1,8 @@
 <template>
   <div class="genpass">
     <collapse2 title="パスワード生成">
-      <el-input v-model='passwd' size="mini"/>
+      <el-input v-model='passwd' style="width: 24em;"/>
+      <br/>
       <div class="a">
         <el-checkbox v-model='alphaUpperFlag' :disabled="distinctivenessFlag">A</el-checkbox>
       </div>
@@ -14,8 +15,9 @@
       <div class="a">
         <el-checkbox v-model='symbolsFlag' :disabled="distinctivenessFlag">@</el-checkbox>
       </div>
+      <br/>
       <div class="b">
-        <el-checkbox v-model='distinctivenessFlag'>識別性</el-checkbox>
+        <el-checkbox v-model='distinctivenessFlag'>高識別性</el-checkbox>
       </div>
       長さ：
       <div class="a">
@@ -48,11 +50,6 @@ export default {
       symbolsFlag: false,
       distinctivenessFlag: false,
       passwdLength: 16
-    }
-  },
-  watch: {
-    distinctivenessFlag: function (v) {
-      console.log(v)
     }
   },
   methods: {
