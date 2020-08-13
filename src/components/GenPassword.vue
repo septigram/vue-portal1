@@ -1,7 +1,8 @@
 <template>
   <div class="genpass">
     <collapse2 title="パスワード生成">
-      <el-input v-model='passwd' style="width: 24em;"/>
+      <el-input v-model='passwd' style="width: 18em;"/>
+      <el-button @click="copy(passwd)" size="mini">Copy</el-button>
       <br/>
       <div class="a">
         <el-checkbox v-model='alphaUpperFlag' :disabled="distinctivenessFlag">A</el-checkbox>
@@ -32,6 +33,22 @@
 
 <script>
 import Collapse2 from './Collapse2'
+
+function execCopy(v) {
+  const tmp = document.createElement('div')
+  const pre = document.createElement('pre')
+  pre.style.webkitUserSelect = 'auto'
+  pre.style.userSelect = 'auto'
+  tmp.appendChild(pre).textContent = v
+  const s = tmp.style
+  s.position = 'fixed'
+  s.right = '200%'
+  document.body.appendChild(tmp)
+  document.getSelection().selectAllChildren(tmp)
+  const result = document.execCommand('copy')
+  document.body.removeChild(tmp)
+  return result
+}
 
 export default {
   name: 'genpass',
@@ -97,6 +114,9 @@ export default {
     },
     getRandomChar: function (vs) {
       return vs[Math.floor(Math.random() * vs.length)]
+    },
+    copy: function (v) {
+      execCopy(v)
     }
   }
 }
