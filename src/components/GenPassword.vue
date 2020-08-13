@@ -2,7 +2,7 @@
   <div class="genpass">
     <collapse2 title="パスワード生成">
       <el-input v-model='passwd' style="width: 18em;"/>
-      <el-button @click="copy(passwd)" size="mini">Copy</el-button>
+      <el-button @click="copy(passwd)" icon="el-icon-document-copy"/>
       <br/>
       <div class="a">
         <el-checkbox v-model='alphaUpperFlag' :disabled="distinctivenessFlag">A</el-checkbox>
