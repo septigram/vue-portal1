@@ -5,9 +5,11 @@
       <el-checkbox v-model="isRegex" @change='updateResult()'>正規表現</el-checkbox>
       <el-tabs v-model="tab">
         <el-tab-pane label="元データ" name="s">
+          {{source.split("\n").length}}
           <el-input type="textarea" :rows='20' v-model="source" placeholder="抽出対象データを貼り付けてください"/>
         </el-tab-pane>
         <el-tab-pane label="抽出結果" name="r">
+          {{result.split("\n").length}}
           <el-input type="textarea" :rows='20' v-model="result" :readonly='true'/>
         </el-tab-pane>
       </el-tabs>
