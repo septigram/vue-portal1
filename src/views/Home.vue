@@ -15,8 +15,9 @@ export default {
   },
   data: function () {
     return {
-      memo: 'memo1'
+      memo: 'memo1',
     }
   }
 }
 </script>
+

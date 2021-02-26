@@ -89,7 +89,12 @@ export default {
         { name: 'ナンプレ', type: 'sudoku', checked: true },
         { name: 'Bulls and Cows', type: 'bulls-and-cows', checked: true },
         // { name: '', type: 'test', checked: true }
-      ]
+      ],
+      width: 512,
+      height: 512,
+      path: 'M 10 10 L 30 50',
+      path2: '',
+      path3: ''
     }
   },
   created: function () {
@@ -114,6 +119,30 @@ export default {
       this.showComponentEdit = false
       if (window.localStorage) {
         window.localStorage.setItem('vue-portal1-comp', JSON.stringify(this.components))
+      }
+    },
+    getCrossPoint: function (l0, l1) {
+      var a1 = l0.p0.y - l0.p1.y;
+      var a2 = l1.p0.y - l1.p1.y;
+      var b1 = l0.p1.x - l0.p0.x;
+      var b2 = l1.p1.x - l1.p0.x;
+      var c1 = l0.p0.x * l0.p1.y - l0.p1.x * l0.p0.y;
+      var c2 = l1.p0.x * l1.p1.y - l1.p1.x * l1.p0.y;
+      // ※並行判定省略
+      if (b1 == 0 || b2 == 0) {
+        if (a2 == 0) {
+          return l1.p0;
+        } else if (a1 == 0) {
+          return l0.p0;
+        } else {
+          // 交点不定
+          return null;
+        }
+      } else {
+        return {
+          x: ((b1 * c2 - b2 * c1) / (a1 * b2 - a2 * b1)),
+          y: ((a1 * c2 - a2 * c1) / (a2 * b1 - a1 * b2))
+        }
       }
     }
   }
